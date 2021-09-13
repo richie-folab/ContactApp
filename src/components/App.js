@@ -5,6 +5,7 @@ import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import ContactDetail from "./CardDetail";
+import ContactDelete from "./ContactDelete";
 import { uuid } from "uuidv4";
 
 function App() {
@@ -65,6 +66,19 @@ function App() {
           />
 
           <Route path="/contact/:id" component={ContactDetail} />
+
+          {/* <Route exact path="/delete/:id" component={ContactDelete} /> */}
+          <Route
+            path="/delete/:id"
+            exact
+            render={(props) => (
+              <ContactDelete
+                {...props}
+                // contacts={contact}
+                getContactId={removeContactHandler}
+              />
+            )}
+          />
         </Switch>
       </Router>
     </div>

@@ -14,6 +14,7 @@ class AddContact extends React.Component {
     //Call the callback function of the parent component
     this.props.addContactHandler(this.state);
     this.setState({ name: "", email: "" });
+
     //programmatically redirect to home page
     this.props.history.push("/");
   };
