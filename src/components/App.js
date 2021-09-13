@@ -38,8 +38,16 @@ function App() {
   //   // // });
   // };
 
-  const addContactHandler = (contact) => {
+  const addContactHandler = async (contact) => {
     //Add new contact to previous list of contacts
+    const request = {
+      id: uuid(),
+      ...contact,
+    };
+
+    const response = await api.post("/contacts", request);
+    g;
+
     setContacts([...contacts, { id: uuid(), ...contact }]);
   };
 
