@@ -7,20 +7,43 @@ import ContactList from "./ContactList";
 import ContactDetail from "./CardDetail";
 import ContactDelete from "./ContactDelete";
 import { uuid } from "uuidv4";
+import api from "../api/contacts";
 
 function App() {
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState([]);
 
-  const addContactHandler = (contact) => {
-    console.log(contact);
+  // //Retrieve Contacts from API
+  // const retrieveContacts = async () => {
+  //   // try {
+  //   const response = api.get("/contacts");
 
-    //Add new contact to previous list of contactsßßßß
+  //   console.log("response", response.data);
+
+  //   return response.data;
+  //   // } catch (error) {
+  //   //   console.log("error", error);
+  //   // }
+
+  //   // const response = await api.get("/contacts");
+
+  //   // console.log("response", response.data);
+
+  //   // return response.data;
+
+  //   // // await api.get("/contacts").then((response) => {
+  //   // //   console.log("response", response.data);
+
+  //   // //   return response.data;
+  //   // // });
+  // };
+
+  const addContactHandler = (contact) => {
+    //Add new contact to previous list of contacts
     setContacts([...contacts, { id: uuid(), ...contact }]);
   };
 
   const removeContactHandler = (id) => {
-    console.log("id => ", id);
     const newContactLisit = contacts.filter((contact) => {
       return contact.id !== id;
     });
@@ -30,11 +53,11 @@ function App() {
 
   //Retrieve record on initial render
   useEffect(() => {
-    const retrievedContacts = JSON.parse(
-      localStorage.getItem(LOCAL_STORAGE_KEY)
-    );
+    api.get("/contacts").then((response) => {
+      setContacts(response.data);
+    });
 
-    if (retrievedContacts) setContacts(retrievedContacts);
+    //getAllContacts();
   }, []);
 
   //Store in Local storage upon the change of the state, contacts
