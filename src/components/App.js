@@ -13,31 +13,6 @@ function App() {
   const LOCAL_STORAGE_KEY = "contacts";
   const [contacts, setContacts] = useState([]);
 
-  // //Retrieve Contacts from API
-  // const retrieveContacts = async () => {
-  //   // try {
-  //   const response = api.get("/contacts");
-
-  //   console.log("response", response.data);
-
-  //   return response.data;
-  //   // } catch (error) {
-  //   //   console.log("error", error);
-  //   // }
-
-  //   // const response = await api.get("/contacts");
-
-  //   // console.log("response", response.data);
-
-  //   // return response.data;
-
-  //   // // await api.get("/contacts").then((response) => {
-  //   // //   console.log("response", response.data);
-
-  //   // //   return response.data;
-  //   // // });
-  // };
-
   const addContactHandler = async (contact) => {
     //Add new contact to previous list of contacts
     const request = {
@@ -46,12 +21,12 @@ function App() {
     };
 
     const response = await api.post("/contacts", request);
-    g;
 
-    setContacts([...contacts, { id: uuid(), ...contact }]);
+    setContacts([...contacts, response.data]);
   };
 
-  const removeContactHandler = (id) => {
+  const removeContactHandler = async (id) => {
+    await api.delete(`/contacts/${id}`);
     const newContactLisit = contacts.filter((contact) => {
       return contact.id !== id;
     });
