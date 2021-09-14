@@ -1,9 +1,14 @@
 import React from "react";
 
-class AddContact extends React.Component {
-  state = { name: "", email: "" };
+class EditContact extends React.Component {
+  constructor(props) {
+    super(props);
 
-  add = (e) => {
+    const { id, email, name } = props.location.state.contact;
+    this.state = { id, name, email };
+  }
+
+  edit = (e) => {
     e.preventDefault();
 
     if (this.state.name === "" || this.state.email === "") {
@@ -12,7 +17,7 @@ class AddContact extends React.Component {
     }
 
     //Call the callback function of the parent component
-    this.props.addContactHandler(this.state);
+    this.props.updateContactHandler(this.state);
     this.setState({ name: "", email: "" });
 
     //programmatically redirect to home page
@@ -22,9 +27,9 @@ class AddContact extends React.Component {
   render() {
     return (
       <div className="ui main">
-        <h2>Add Contact</h2>
+        <h2>Edit Contact</h2>
         <div className="ui form">
-          <form className="ui form" onSubmit={this.add}>
+          <form className="ui form" onSubmit={this.edit}>
             <div className="ui field">
               <label>Name</label>
               <input
@@ -45,7 +50,7 @@ class AddContact extends React.Component {
                 onChange={(e) => this.setState({ email: e.target.value })}
               />
             </div>
-            <button className="ui button blue">Add</button>
+            <button className="ui button blue">Update</button>
           </form>
         </div>
       </div>
@@ -53,4 +58,4 @@ class AddContact extends React.Component {
   }
 }
 
-export default AddContact;
+export default EditContact;

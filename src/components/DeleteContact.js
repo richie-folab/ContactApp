@@ -2,7 +2,7 @@ import React from "react";
 // import { Link } from "react-router-dom";
 import user from "../images/user.jpeg";
 
-const ContactDelete = (props) => {
+const DeleteContact = (props) => {
   const { id, name, email } = props.location.state.contact;
 
   const onDeleteContact = (id) => {
@@ -38,4 +38,4 @@ const ContactDelete = (props) => {
   );
 };
 
-export default ContactDelete;
+export default DeleteContact;

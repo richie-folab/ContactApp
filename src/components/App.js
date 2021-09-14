@@ -5,7 +5,9 @@ import Header from "./Header";
 import AddContact from "./AddContact";
 import ContactList from "./ContactList";
 import ContactDetail from "./CardDetail";
-import ContactDelete from "./ContactDelete";
+import DeleteContact from "./DeleteContact";
+import EditContact from "./EditContact";
+
 import { uuid } from "uuidv4";
 import api from "../api/contacts";
 
@@ -23,6 +25,17 @@ function App() {
     const response = await api.post("/contacts", request);
 
     setContacts([...contacts, response.data]);
+  };
+
+  const updateContactHandler = async (contact) => {
+    const response = await api.put(`/contacts/${contact.id}`, contact);
+
+    const { id, name, email } = response.data;
+    setContacts(
+      contacts.map((contact) => {
+        return contact.id === id ? { ...response.data } : contact;
+      })
+    );
   };
 
   const removeContactHandler = async (id) => {
@@ -70,7 +83,15 @@ function App() {
               <AddContact {...props} addContactHandler={addContactHandler} />
             )}
           />
-
+          <Route
+            path="/edit"
+            render={(props) => (
+              <EditContact
+                {...props}
+                updateContactHandler={updateContactHandler}
+              />
+            )}
+          />
           <Route path="/contact/:id" component={ContactDetail} />
 
           {/* <Route exact path="/delete/:id" component={ContactDelete} /> */}
@@ -78,7 +99,7 @@ function App() {
             path="/delete/:id"
             exact
             render={(props) => (
-              <ContactDelete
+              <DeleteContact
                 {...props}
                 // contacts={contact}
                 getContactId={removeContactHandler}
